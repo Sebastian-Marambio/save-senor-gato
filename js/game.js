@@ -78,7 +78,7 @@ let boxHeight=50
 let winCond
 let lives
 
-//animations
+//animations + obstacle creating
 
 function startGame() {
     startBtn.style.display = "none";

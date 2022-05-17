@@ -3,6 +3,6 @@
     height: auto;
 }
 
-.replay-button {
-    display:none;
+#replay-button {
+    display: none;
 }

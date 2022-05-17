@@ -36,15 +36,19 @@ lndobst2.src = "/img/zombie2.png"
 const logo = new Image()
 logo.src = ""
 
-const crash = new Image()
-crash.src = ""
+const box = new Image()
+box.src = "/img/box-empty.png"
+
+const boxCat = new Image()
+boxCat.src = "/img/boxcat.png"
 
 const startBtn = document.getElementById('start-button')
+const replayBtn = document.getElementById('replay-button')
 
 //constant values, movement speed, starting positions etc.
 
-let catX = canvas.width / 2 
-let catY = 515;
+let catX
+let catY
 const catHorSpeedValue = 40;
 const catVertSpeedValue = 5;
 let gameOver = false
@@ -63,25 +67,37 @@ let pltfrm0Speed=1
 let pltfrm1Speed=2.5
 let pltfrm2Speed=1.5
 let pltfrm3Speed=1
+let pltfrmMove=false
 let landObst1Speed=3
 let landObst2Speed=2
-let landObst3Speed=0
+let landObst3Speed=1
 let animationId
+let boxArr
+let boxWidth=50
+let boxHeight=50
+let winCond
+let lives
 
 //animations
 
 function startGame() {
     startBtn.style.display = "none";
+    replayBtn.style.display = "none";
     canvas.style.display = "block";
-    requestAnimationFrame(animate);
+    catX = canvas.width / 2 ;
+    catY = 515;
+    gameOver=false;
+    winCond = 0
+    boxArr=[[175, false],[375, false], [575,false]]
+    animate();
 }
 
 function createObst(id) {
     if (animationId%125 === 0) {
-        landObst1.push([lndobst1,-200,460,40,40])
+        landObst1.push([lndobst1,-200,435,45,50])
     }
     if (animationId%100 === 0) {
-        landObst2.push([lndobst2,1000,420,40,40])
+        landObst2.push([lndobst2,1000,475,45,50])
     }
     if (animationId%175 === 0) {
         pltfrmArr0.push([pltfrm3,-200,340,90,40])
@@ -151,16 +167,31 @@ function animate () {
     
     createObst()
     drawObst()
+    drawBoxes()
     drawCat()
+    checkCollision()
+    drawScore()
     animationId = requestAnimationFrame(animate)
     }
   else if (gameOver === true) {
-    drawResult()
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+    
+    createObst()
+    drawObst()
+    drawDeadCat()
+    // drawResult()
+    gameOver=false
+    replayBtn.style.display = "block"
+    document.getElementById('replay-button').onclick = () => {
+        startGame();
+      };
   }
 }
 
 function drawCat () {
-    ctx.drawImage(cat, catX, catY, 50, 50)
+    ctx.drawImage(cat, catX, catY, 45, 50)
+    console.log(catY)
     if (isCatGoingLeft) {
         catX -= catVertSpeedValue;
         isCatGoingLeft=false;
@@ -168,19 +199,144 @@ function drawCat () {
         catX += catVertSpeedValue;
         isCatGoingRight=false;
   } else if (isCatGoingUp) {
-        catY -= catHorSpeedValue
-        isCatGoingUp = false;
+        if (catY>195) {
+            isCatGoingUp = false;
+            catY -= catHorSpeedValue
+        }
+        else if (catY===195) {
+            if (catX+20<215 && 185<<catX && boxArr[0][1]===false) {
+                isCatGoingUp = false;
+                boxArr[0][1]=true
+                catX = canvas.width / 2 ;
+                catY = 515;
+                winCond+=1
+            } else if (catX+20<415 && 385<<catX && boxArr[1][1]===false) {
+                isCatGoingUp = false;
+                boxArr[1][1]=true
+                catX = canvas.width / 2 ;
+                catY = 515;
+                winCond+=1
+            } else if (catX+20<615 && 585<<catX && boxArr[2][1]===false) {
+                isCatGoingUp = false;
+                boxArr[2][1]=true
+                catX = canvas.width / 2 ;
+                catY = 515;
+                winCond+=1
+            }
+        } 
+        
   } else if (isCatGoingDown) {
+      if (catY>515) {
         catY += catHorSpeedValue
         isCatGoingDown = false;
+      }
+        
 }
 }
 
-function startGame() {
-    startBtn.style.display = "none";
-    canvas.style.display = "block";
-    animate()
-  }
+function drawBoxes() {
+    boxArr.forEach(el => {
+        if (el[1]===false) {
+        ctx.drawImage(box, el[0], 205-boxHeight,boxWidth,boxHeight)
+        }
+        else if (el[1]===true) {
+        ctx.drawImage(boxCat, el[0], 205-boxHeight,boxWidth,boxHeight)
+        
+        }
+    })
+}
+
+function checkCollision() {
+    if (catY===475) {
+        landObst2.forEach(obst => {
+            if (catX >= obst[1]-15 && catX <= obst[1]+obst[3]-35) {
+                gameOver=true 
+            }
+        })
+    }
+    if (catY===435) {
+
+        landObst1.forEach(obst => {
+            if (catX >= obst[1]-15 && catX <= obst[1]+obst[3]-25) {
+                gameOver=true
+            }
+        })
+    }
+    if (catY===315) {
+        pltfrmMove=false
+        if (catX>canvas.width) {
+            gameOver=true}
+        pltfrmArr0.forEach(pltfrm => {
+        if (catX >= pltfrm[1]-15 && catX <= pltfrm[1]+pltfrm[3]-35) {
+                catX+=pltfrm0Speed
+                pltfrmMove=true
+            }
+        })
+        if (pltfrmMove===false) {
+            gameOver=true
+        }
+    }
+    if (catY===275) {
+        pltfrmMove=false
+        if (catX+20<0) {
+            gameOver=true}
+        pltfrmArr1.forEach(pltfrm => {
+        if (catX >= pltfrm[1]-15 && catX <= pltfrm[1]+pltfrm[3]-25) {
+                catX-=pltfrm1Speed
+                pltfrmMove=true
+            }
+        })
+        if (pltfrmMove===false) {
+            gameOver=true
+        }
+    }
+    if (catY===235) {
+        pltfrmMove=false
+        if (catX>canvas.width) {
+            gameOver=true}
+        pltfrmArr2.forEach(pltfrm => {
+        if (catX >= pltfrm[1]-15 && catX <= pltfrm[1]+pltfrm[3]-35) {
+                catX+=pltfrm2Speed
+                pltfrmMove=true
+            }
+        })
+        if (pltfrmMove===false) {
+            gameOver=true
+        }
+    }
+    if (catY===195) {
+        pltfrmMove=false
+        if (catX+20<0) {
+            gameOver=true}
+        pltfrmArr3.forEach(pltfrm => {
+        if (catX >= pltfrm[1]-15 && catX <= pltfrm[1]+pltfrm[3]-25) {
+                catX-=pltfrm3Speed
+                pltfrmMove=true
+            }
+        })
+        if (pltfrmMove===false) {
+            gameOver=true
+        }
+        
+    }
+    if (catY===155) {
+        
+    }
+
+}
+
+function drawDeadCat() {
+    ctx.drawImage(cat2, catX, catY, 45, 50)
+}
+
+function drawScore() {
+    let score=0
+}
+
+function drawResult() {
+
+}
+
 
 //event listeners (key presses, clicks)
 

@@ -3,6 +3,11 @@
     height: auto;
 }
 
+<<<<<<< HEAD
 #replay-button {
     display: none;
+=======
+.replay-button {
+    display:none;
+>>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
 }

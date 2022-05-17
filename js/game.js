@@ -36,6 +36,7 @@ lndobst2.src = "/img/zombie2.png"
 const logo = new Image()
 logo.src = ""
 
+<<<<<<< HEAD
 const box = new Image()
 box.src = "/img/box-empty.png"
 
@@ -49,6 +50,17 @@ const replayBtn = document.getElementById('replay-button')
 
 let catX
 let catY
+=======
+const crash = new Image()
+crash.src = ""
+
+const startBtn = document.getElementById('start-button')
+
+//constant values, movement speed, starting positions etc.
+
+let catX = canvas.width / 2 
+let catY = 515;
+>>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
 const catHorSpeedValue = 40;
 const catVertSpeedValue = 5;
 let gameOver = false
@@ -67,6 +79,7 @@ let pltfrm0Speed=1
 let pltfrm1Speed=2.5
 let pltfrm2Speed=1.5
 let pltfrm3Speed=1
+<<<<<<< HEAD
 let pltfrmMove=false
 let landObst1Speed=3
 let landObst2Speed=2
@@ -90,14 +103,34 @@ function startGame() {
     winCond = 0
     boxArr=[[175, false],[375, false], [575,false]]
     animate();
+=======
+let landObst1Speed=3
+let landObst2Speed=2
+let landObst3Speed=0
+let animationId
+
+//animations
+
+function startGame() {
+    startBtn.style.display = "none";
+    canvas.style.display = "block";
+    requestAnimationFrame(animate);
+>>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
 }
 
 function createObst(id) {
     if (animationId%125 === 0) {
+<<<<<<< HEAD
         landObst1.push([lndobst1,-200,435,45,50])
     }
     if (animationId%100 === 0) {
         landObst2.push([lndobst2,1000,475,45,50])
+=======
+        landObst1.push([lndobst1,-200,460,40,40])
+    }
+    if (animationId%100 === 0) {
+        landObst2.push([lndobst2,1000,420,40,40])
+>>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
     }
     if (animationId%175 === 0) {
         pltfrmArr0.push([pltfrm3,-200,340,90,40])
@@ -167,6 +200,7 @@ function animate () {
     
     createObst()
     drawObst()
+<<<<<<< HEAD
     drawBoxes()
     drawCat()
     checkCollision()
@@ -186,12 +220,23 @@ function animate () {
     document.getElementById('replay-button').onclick = () => {
         startGame();
       };
+=======
+    drawCat()
+    animationId = requestAnimationFrame(animate)
+    }
+  else if (gameOver === true) {
+    drawResult()
+>>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
   }
 }
 
 function drawCat () {
+<<<<<<< HEAD
     ctx.drawImage(cat, catX, catY, 45, 50)
     console.log(catY)
+=======
+    ctx.drawImage(cat, catX, catY, 50, 50)
+>>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
     if (isCatGoingLeft) {
         catX -= catVertSpeedValue;
         isCatGoingLeft=false;
@@ -199,6 +244,7 @@ function drawCat () {
         catX += catVertSpeedValue;
         isCatGoingRight=false;
   } else if (isCatGoingUp) {
+<<<<<<< HEAD
         if (catY>195) {
             isCatGoingUp = false;
             catY -= catHorSpeedValue
@@ -337,6 +383,21 @@ function drawResult() {
 
 }
 
+=======
+        catY -= catHorSpeedValue
+        isCatGoingUp = false;
+  } else if (isCatGoingDown) {
+        catY += catHorSpeedValue
+        isCatGoingDown = false;
+}
+}
+
+function startGame() {
+    startBtn.style.display = "none";
+    canvas.style.display = "block";
+    animate()
+  }
+>>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
 
 //event listeners (key presses, clicks)
 

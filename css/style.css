@@ -1,13 +1,69 @@
-.arrows-img {
-    width: 50px;
-    height: auto;
+html {
+    height: 90%;
 }
 
-<<<<<<< HEAD
+body {
+    background-image: url("/img/bg-html.jpg");
+    background-size: 100%;
+}
+
+.arrows-img {
+    width: 100px;
+    height: auto;
+    padding: 10px 0px;
+}
+
+#start-button{
+    width: 200px;
+}
+
 #replay-button {
+    width: 30px;
     display: none;
-=======
-.replay-button {
-    display:none;
->>>>>>> 6c9f462c3e342fd02655100bebb42e31b78a26cc
+    padding: 10px 0px;
+}
+
+.game-intro {
+    display: flex;
+    height: 90%;
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: stretch;
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 35px;
+}
+
+.game-intro p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    font-weight: 200;
+    padding: 20px 0px;
+}
+
+.hidden>* {
+	display:none;
+}
+
+.visible>div {
+	display:block;
+}
+
+#game-board {
+    width:100%;
+    visibility: collapse;
+    display:flex;
+    justify-content: center;
+}
+
+canvas {
+    display: none;
+}
+
+.replay {
+    display: flex;
+    justify-content: center;
 }

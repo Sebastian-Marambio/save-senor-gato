@@ -19,43 +19,43 @@ const cat2 = new Image()
 cat2.src = "./img/cat2.png"
 
 const pltfrm1 = new Image()
-pltfrm1.src = "/img/tree1.png"
+pltfrm1.src = "./img/tree1.png"
 
 const pltfrm2 = new Image()
-pltfrm2.src = "/img/tree2.png"
+pltfrm2.src = "./img/tree2.png"
 
 const pltfrm3 = new Image()
-pltfrm3.src = "/img/lily.png"
+pltfrm3.src = "./img/lily.png"
 
 const lndobst1 = new Image()
-lndobst1.src = "/img/dog.png"
+lndobst1.src = "./img/dog.png"
 
 const lndobst2 = new Image()
-lndobst2.src = "/img/zombie2.png"
+lndobst2.src = "./img/zombie2.png"
 
 const lndobst3 = new Image()
-lndobst3.src = "/img/zombie3.png"
+lndobst3.src = "./img/zombie3.png"
 
 const logo = new Image()
 logo.src = ""
 
 const box = new Image()
-box.src = "/img/box-empty.png"
+box.src = "./img/box-empty.png"
 
 const boxCat = new Image()
-boxCat.src = "/img/boxcat.png"
+boxCat.src = "./img/boxcat.png"
 
 const win = new Image()
-win.src = "/img/win.jpg"
+win.src = "./img/win.jpg"
 
 
 //audio
 
-let themeSong = new Audio('/sound/bensound-cute.mp3')
+let themeSong = new Audio('./sound/bensound-cute.mp3')
 themeSong.volume = 0.2
-let reachBox = new Audio('/sound/reachbox.wav')
+let reachBox = new Audio('./sound/reachbox.wav')
 reachBox.volume = 0.4
-let die = new Audio('/sound/die.wav')
+let die = new Audio('./sound/die.wav')
 die.volume = 0.4
 
 //constant values, movement speed, starting positions etc.

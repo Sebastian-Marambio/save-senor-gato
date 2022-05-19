@@ -45,6 +45,9 @@ box.src = "/img/box-empty.png"
 const boxCat = new Image()
 boxCat.src = "/img/boxcat.png"
 
+const win = new Image()
+win.src = "/img/win.jpg"
+
 
 //audio
 
@@ -91,6 +94,8 @@ let boxWidth=50
 let boxHeight=50
 let winCond
 let lives
+let timer
+let intervalId
 
 //animations + obstacle creating
 
@@ -106,12 +111,14 @@ function startGame() {
     catY = 515;
     gameOver=false;
     winCond = 0
+    timer = 120
     boxArr=[[75, false],[375, false], [675,false]]
+    intervalId = setInterval(() => {if (timer>0) {timer--}},1000)
     animate()
     themeSong.play();
 }
 
-function createObst(id) {
+function createObst() {
     if (animationId%85 === 0) {
         landObst1.push([lndobst1,-100,435,45,50])
     }
@@ -199,7 +206,7 @@ function animate () {
     drawBoxes()
     drawCat()
     checkCollision()
-    drawScore()
+    drawTime()
     if (winCond === 3) {gameOver=true}
     animationId = requestAnimationFrame(animate)
     }
@@ -211,6 +218,7 @@ function animate () {
     drawObst()
     gameOver=false
     replayBtn.style.visibility = "visible"
+    clearInterval(intervalId)
     document.getElementById('replay-button').onclick = () => {
         startGame();
       };
@@ -223,11 +231,15 @@ function animate () {
 function drawCat () {
     ctx.drawImage(cat, catX, catY, 45, 50)
     if (isCatGoingLeft) {
-        catX -= catVertSpeedValue;
+        if (catX>0) {
+            catX -= catVertSpeedValue;
+        }
         isCatGoingLeft=false;
   } else if (isCatGoingRight) {
+      if (catX<canvas.width-40) {
         catX += catVertSpeedValue;
-        isCatGoingRight=false;
+        }
+       isCatGoingRight=false;
   } else if (isCatGoingUp) {
         if (catY>195) {
             isCatGoingUp = false;
@@ -381,21 +393,30 @@ function drawDeadCat() {
     ctx.drawImage(cat2, catX, catY, 45, 50)
 }
 
-function drawScore() {
-    let score=0
+function drawTime() {
+    // setInterval(() => {if (timer>0) {timer--}},1000)
+    ctx.font ='bold 20px Verdana'
+    ctx.textAlign='right'
+    ctx.fillStyle='SlateBlue'
+    ctx.fillText(timer, canvas.width-10, 30)
+    if (timer===0) {gameOver=true}
 }
 
 function drawResult() {
     if (winCond===3) {
-        ctx.font = '40px Verdana'
+        ctx.font = 'bold 40px Verdana'
         ctx.textAlign="center"
-        ctx.fillText('Nice! You win!', 400, 260)
+        setTimeout(ctx.clearRect(0, 0, canvas.width, canvas.height),2000)
+        ctx.drawImage(win,117,0,565,565)
+        ctx.fillStyle='#4285f4'
+        ctx.fillText('Nice one! You win!', 400, 260)
         ctx.fillText('Thanks for playing :)', 400, 310)
     }
     else {
         drawDeadCat()
-        ctx.font = '40px Verdana'
+        ctx.font = 'bold 40px Verdana'
         ctx.textAlign="center"
+        ctx.fillStyle='#4285f4'
         ctx.fillText('You lost! Play again?', 400, 260)
         ctx.fillText('Click the replay button on top!', 400, 310)
     }

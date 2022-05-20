@@ -62,8 +62,8 @@ Definition of the different states and their transition (transition functions)
 ### Git
 URls for the project repo and deploy
 [Link Repo](https://github.com/Sebastian-Marambio/save-senor-gato)
-[Link Deploy]()
+[Link Deploy](https://sebastian-marambio.github.io/save-senor-gato/)
 
 ### Slides
 URls for the project presentation (slides)
-[Link Slides.com]()
+[Link Slides.com](https://docs.google.com/presentation/d/1QCaWG63Lvp6ttEQfjlSY4vJYEGLWtA_iD9TbWY1YU-o/edit?usp=sharing)
